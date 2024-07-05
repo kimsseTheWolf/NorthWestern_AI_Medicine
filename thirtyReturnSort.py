@@ -1,3 +1,10 @@
+import mysql.connector
+
+conn = mysql.connector.connect(host='localhost',user='root',password='070401',database='healthcare')
+
+cursor = conn.cursor()
+
+cursor.execute("""
 SELECT 
     diagnoses.diagnosis_desc, 
     d1.discharge_id, 
@@ -40,3 +47,13 @@ WHERE
     diagnoses.diagnosis_desc LIKE "%heart failure%"
 ORDER BY
     d1.insurance_type ASC;
+""")
+
+patient_dict = {}
+
+result = cursor.fetchall()
+for i in result:
+    print(i)
+
+cursor.close()
+conn.close()
